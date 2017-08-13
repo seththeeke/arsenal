@@ -198,6 +198,7 @@
             position: absolute;
             right: 0;
             bottom: 0;
+            z-index: -1;
         }
 
         .fixtures-table-data-row{
@@ -222,12 +223,12 @@
           <a name="arsenal" href="/arsenal">Arsenal</a>
         </iron-selector>
         <iron-ajax id="standingsRequest"
-                    url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/16-17/standings"
+                    url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/17-18/standings"
                     handle-as="json"
                     on-response="_handleLeagueStandings"
                     method="GET"></iron-ajax>
       <iron-ajax id="fixturesRequest"
-                 url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/16-17/rounds?team_identifier=zymx5xdh4knl5dwbcfv3kszge9d8brnw"
+                 url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/17-18/rounds?team_identifier=zymx5xdh4knl5dwbcfv3kszge9d8brnw"
                  handle-as="json"
                  on-response="_handleArsenalFixtures"
                  method="GET"></iron-ajax>
