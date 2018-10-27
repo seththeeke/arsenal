@@ -208,6 +208,7 @@
 
         h2{
             margin: 0;
+            padding: 0;
         }
 
     </style>
@@ -223,12 +224,12 @@
           <a name="arsenal" href="/arsenal">Arsenal</a>
         </iron-selector>
         <iron-ajax id="standingsRequest"
-                    url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/17-18/standings"
+                    url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/18-19/standings"
                     handle-as="json"
                     on-response="_handleLeagueStandings"
                     method="GET"></iron-ajax>
       <iron-ajax id="fixturesRequest"
-                 url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/17-18/rounds?team_identifier=zymx5xdh4knl5dwbcfv3kszge9d8brnw"
+                 url="https://soccer.sportsopendata.net/v1/leagues/premier-league/seasons/18-19/rounds?team_identifier=zymx5xdh4knl5dwbcfv3kszge9d8brnw"
                  handle-as="json"
                  on-response="_handleArsenalFixtures"
                  method="GET"></iron-ajax>
@@ -287,14 +288,12 @@
                   </table>
               </div>
               <div id="fixtures" hidden>
-                  <h2>Upcoming Fixtures</h2>
                   <table>
                       <template is="dom-repeat" items="[[upcomingFixtures]]" as="fixture">
                           <tr class="fixtures-table-row">
                               <td class="fixtures-table-data-row">[[fixture.date_match]]</td>
-                              <td class="fixtures-table-data-row">[[fixture.home_team]]</td>
-                              <td class="fixtures-table-data-row">v</td>
-                              <td class="fixtures-table-data-row">[[fixture.away_team]]</td>
+                              <td class="fixtures-table-data-row">[[fixture.location]]</td>
+                              <td class="fixtures-table-data-row">[[fixture.opposition]]</td>
                           </tr>
                       </template>
                   </table>
@@ -383,10 +382,19 @@
             }
             var upcomingFixtures = [];
             for (let i = closestIndex; i < closestIndex + 3; i++){
+                let home_team = fixtures[i].home_team;
+                let away_team = fixtures[i].away_team;
+                let opposition = away_team;
+                let location = "v"
+                if (away_team === "Arsenal") {
+                  opposition = home_team;
+                  location = "at";
+                }
+
                 upcomingFixtures.push({
                     date_match: _formatDate(fixtures[i].date_match),
-                    home_team: fixtures[i].home_team,
-                    away_team: fixtures[i].away_team
+                    opposition: opposition,
+                    location: location
                 });
             }
             this.set("upcomingFixtures", upcomingFixtures);
