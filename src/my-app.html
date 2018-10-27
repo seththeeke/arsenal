@@ -208,6 +208,7 @@
 
         h2{
             margin: 0;
+            padding: 0;
         }
 
     </style>
@@ -287,14 +288,12 @@
                   </table>
               </div>
               <div id="fixtures" hidden>
-                  <h2>Upcoming Fixtures</h2>
                   <table>
                       <template is="dom-repeat" items="[[upcomingFixtures]]" as="fixture">
                           <tr class="fixtures-table-row">
                               <td class="fixtures-table-data-row">[[fixture.date_match]]</td>
-                              <td class="fixtures-table-data-row">[[fixture.home_team]]</td>
-                              <td class="fixtures-table-data-row">v</td>
-                              <td class="fixtures-table-data-row">[[fixture.away_team]]</td>
+                              <td class="fixtures-table-data-row">[[fixture.location]]</td>
+                              <td class="fixtures-table-data-row">[[fixture.opposition]]</td>
                           </tr>
                       </template>
                   </table>
@@ -383,10 +382,19 @@
             }
             var upcomingFixtures = [];
             for (let i = closestIndex; i < closestIndex + 3; i++){
+                let home_team = fixtures[i].home_team;
+                let away_team = fixtures[i].away_team;
+                let opposition = away_team;
+                let location = "v"
+                if (away_team === "Arsenal") {
+                  opposition = home_team;
+                  location = "at";
+                }
+
                 upcomingFixtures.push({
                     date_match: _formatDate(fixtures[i].date_match),
-                    home_team: fixtures[i].home_team,
-                    away_team: fixtures[i].away_team
+                    opposition: opposition,
+                    location: location
                 });
             }
             this.set("upcomingFixtures", upcomingFixtures);
